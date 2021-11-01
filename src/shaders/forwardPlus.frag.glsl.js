@@ -1,5 +1,5 @@
 export default function(params) {
-  return `
+    return `
   // TODO: This is pretty much just a clone of forward.frag.glsl.js
 
   #version 100
@@ -8,6 +8,10 @@ export default function(params) {
   uniform sampler2D u_colmap;
   uniform sampler2D u_normap;
   uniform sampler2D u_lightbuffer;
+
+  // uniform mat4 u_viewProjectionMatrix;
+  // uniform mat4 u_viewMatrix;
+  // //uniform mat4 u_clipDist;
 
   // TODO: Read this buffer to determine the lights influencing a cluster
   uniform sampler2D u_clusterbuffer;
@@ -80,7 +84,12 @@ export default function(params) {
     vec3 normal = applyNormalMap(v_normal, normap);
 
     vec3 fragColor = vec3(0.0);
+    vec3 v_viewPos = u_viewProjectionMatrix * vec4(v_position, 1);
 
+    // int clusterX = int(gl_FragCoord.x / float(${params.cwidth}) * float(${params.numXSlices}));
+    // int clusterY = int(gl_FragCoord.y / float(${params.cheight}) * float(${params.numYSlices}));
+    // int clusterZ = int(v_viewPos.z / u_clipDist * float(${params.numZSlices}));
+   
     for (int i = 0; i < ${params.numLights}; ++i) {
       Light light = UnpackLight(i);
       float lightDistance = distance(light.position, v_position);
@@ -96,6 +105,7 @@ export default function(params) {
     fragColor += albedo * ambientLight;
 
     gl_FragColor = vec4(fragColor, 1.0);
+
   }
   `;
 }

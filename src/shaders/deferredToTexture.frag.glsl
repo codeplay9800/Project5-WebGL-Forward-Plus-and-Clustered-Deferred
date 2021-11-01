@@ -43,7 +43,7 @@ void main() {
 
     // TODO: populate your g buffer
     gl_FragData[0] = vec4(v_position, 1.0);
-    gl_FragData[1] =  vec4(norm, 1.0);
+    gl_FragData[1] =  vec4(float32x3_to_Oct(norm), 0.0, 1.0);
     gl_FragData[2] =  vec4(col, 1.0);
     // gl_FragData[3] = ??
 }

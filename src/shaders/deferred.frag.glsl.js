@@ -96,7 +96,8 @@ export default function(params) {
   void main() {
     // TODO: extract data from g buffers and do lighting
      vec4 gbPos = texture2D(u_gbuffers[0], v_uv);
-     vec4 gbNor = texture2D(u_gbuffers[1], v_uv);
+     vec4 gNor = texture2D(u_gbuffers[1], v_uv);
+     vec4 gbNor = vec4(oct_to_float32x3(vec2(gNor.x, gNor.y)), 1.0);
      vec4 albedo = texture2D(u_gbuffers[2], v_uv);
 
      vec3 fragColor = vec3(0.0);

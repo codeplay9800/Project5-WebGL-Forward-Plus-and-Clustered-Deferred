@@ -1,11 +1,13 @@
+
 WebGL Forward+ and Clustered Deferred Shading
 ======================
 
 **University of Pennsylvania, CIS 565: GPU Programming and Architecture, Project 5**
 
-* (TODO) YOUR NAME HERE
-* Tested on: (TODO) **Google Chrome 222.2** on
-  Windows 22, i7-2222 @ 2.22GHz 22GB, GTX 222 222MB (Moore 2222 Lab)
+* Shubham Sharma
+  * [LinkedIn](www.linkedin.com/in/codeshubham), [personal website](https://shubhvr.com/).
+* Tested on: Windows 10, i7-9750H @ 2.26GHz, 16GB, GTX 1660ti 6GB (Personal Computer).
+*GPU Compute Capability: 7.5
 
 ### Live Online
 
@@ -15,13 +17,14 @@ WebGL Forward+ and Clustered Deferred Shading
 
 [![](img/video.png)](TODO)
 
-### (TODO: Your README)
+### Overview
 
-*DO NOT* leave the README to the last minute! It is a crucial part of the
-project, and we will not be able to grade you without a good README.
+This project highlights the performance differences between Forward, Forward+ clustered and Deferred clustered shading schemes. 
+- Forward : Implementation of Forward shading in this project has been updated to calculate the visible object Mesh once and iterating through all the lights in the scene to shade the visible mesh or vertices.
+-  Forward+ : The Scene is divided into tiled frustum clusters, which expand along the X, Y and Z axes. The Scene objects are shaded only iterating through the lights which affect them or the lights which affect the clusters in which the object lies in.
+- Deferred Clustered : This required multiple passes of the OpenGL draw pipeline. Scene information is stored as G Buffers in the first pass and the scene is shaded using the same cluster methodology as Forward+ Shading.    
 
-This assignment has a considerable amount of performance analysis compared
-to implementation work. Complete the implementation early to leave time!
+### Performance Analysis 
 
 
 ### Credits

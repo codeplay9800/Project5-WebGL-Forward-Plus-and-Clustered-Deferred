@@ -127,9 +127,9 @@ export default function(params) {
 
       fragColor += vec3( specularIntensity * lightIntensity +  vec3(albedo) * light.color * lambertTerm * lightIntensity);
     }
-
+    const vec3 ambientLight = vec3(0.025);
+    fragColor += vec3(albedo) * ambientLight;
     gl_FragColor = vec4(vec3(fragColor), 1.0);
-    //gl_FragColor = vec4(v_uv, 0.0, 1.0);
   }
   `;
 }

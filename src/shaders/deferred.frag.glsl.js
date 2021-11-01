@@ -26,6 +26,27 @@ export default function(params) {
     vec3 color;
   };
 
+  vec2 signNotZero( vec2 v) {
+		return  vec2((v.x >= 0.0) ? +1.0 : -1.0, (v.y >= 0.0) ? +1.0 : -1.0);
+	}
+
+   vec3 oct_to_float32x3( vec2 e) {
+
+		if (e.x == -2.0 || e.y == -2.0)
+		{
+			return  vec3(0.0, 0.0, 0.0);
+		}
+		vec3 v =  vec3( vec2(e.x, e.y), 1.0 - abs(e.x) - abs(e.y));
+		if (v.z < 0.0)
+		{
+			 vec2 mid = ( 1.0 - abs(vec2(v.y, v.x))) * signNotZero( vec2(v.x, v.y));
+
+			v.x = mid.x;
+			v.y = mid.y;
+		}
+		return normalize(v);
+  }
+  
   float ExtractFloat(sampler2D texture, int textureWidth, int textureHeight, int index, int component) {
     float u = float(index + 1) / float(textureWidth + 1);
     int pixel = component / 4;
@@ -77,7 +98,6 @@ export default function(params) {
      vec4 gbPos = texture2D(u_gbuffers[0], v_uv);
      vec4 gbNor = texture2D(u_gbuffers[1], v_uv);
      vec4 albedo = texture2D(u_gbuffers[2], v_uv);
-    // vec4 gb3 = texture2D(u_gbuffers[3], v_uv);
 
      vec3 fragColor = vec3(0.0);
      vec4 v_viewPos = u_viewMatrix * gbPos;
@@ -116,6 +136,7 @@ export default function(params) {
     const vec3 ambientLight = vec3(0.025);
     fragColor += vec3(albedo) * ambientLight;
 
+    //gl_FragColor = normalize(albedo);
     gl_FragColor = vec4(fragColor, 1.0);
     //gl_FragColor = vec4(v_uv, 0.0, 1.0);
   }

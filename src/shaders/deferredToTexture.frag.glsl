@@ -17,6 +17,26 @@ vec3 applyNormalMap(vec3 geomnor, vec3 normap) {
     return normap.y * surftan + normap.x * surfbinor + normap.z * geomnor;
 }
 
+ vec2 signNotZero( vec2 v) {
+		return  vec2((v.x >= 0.0) ? +1.0 : -1.0, (v.y >= 0.0) ? +1.0 : -1.0);
+	}
+
+ vec2 float32x3_to_Oct( vec3 normal)
+	{
+
+		// this value is for non defined value custom
+		if (abs(normal.x) == 0.0 && abs(normal.y) == 0.0 && abs(normal.z) == 0.0)
+		{
+			return  vec2(-2.0 , -2.0);
+		}
+
+
+		// Project the sphere onto the octahedron, and then onto the xy plane
+		 vec2 p =  vec2(normal.x, normal.y) * ( 1.0 / (abs(normal.x) + abs(normal.y) + abs(normal.z)));
+		// Reflect the folds of the lower hemisphere over the diagonals
+		return (normal.z <= 0.0) ? (( 1.0 - abs( vec2(p.y, p.x))) * signNotZero(p) ) : p;
+	}
+
 void main() {
     vec3 norm = applyNormalMap(v_normal, vec3(texture2D(u_normap, v_uv)));
     vec3 col = vec3(texture2D(u_colmap, v_uv));

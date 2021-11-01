@@ -98,6 +98,7 @@ export default class ClusteredDeferredRenderer extends BaseRenderer {
 
         gl.bindTexture(gl.TEXTURE_2D, this._depthTex);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.DEPTH_COMPONENT, width, height, 0, gl.DEPTH_COMPONENT, gl.UNSIGNED_SHORT, null);
+        
         for (let i = 0; i < NUM_GBUFFERS; i++) {
             gl.bindTexture(gl.TEXTURE_2D, this._gbuffers[i]);
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.FLOAT, null);

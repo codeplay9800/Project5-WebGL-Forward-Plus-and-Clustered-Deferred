@@ -7,6 +7,8 @@ export default function(params) {
 
   uniform sampler2D u_lightbuffer;
   uniform mat4 u_viewMatrix;
+  uniform mat4 u_projMatrixInv;
+  uniform mat4 u_viewProjectionMatrix;
   uniform float u_clipDist;
 
   // TODO: Read this buffer to determine the lights influencing a cluster
@@ -29,6 +31,20 @@ export default function(params) {
   vec2 signNotZero( vec2 v) {
 		return  vec2((v.x >= 0.0) ? +1.0 : -1.0, (v.y >= 0.0) ? +1.0 : -1.0);
 	}
+
+  vec3 WorldPosFromDepth(float depth, vec2 TexCoord) {
+    float z = depth * 2.0 - 1.0;
+
+    vec4 clipSpacePosition = vec4(TexCoord * 2.0 - 1.0, z, 1.0);
+    vec4 viewSpacePosition = u_projMatrixInv * clipSpacePosition;
+
+    // Perspective division
+    viewSpacePosition /= viewSpacePosition.w;
+
+    vec4 worldSpacePosition = u_viewMatrix * viewSpacePosition;
+
+    return worldSpacePosition.xyz;
+}
 
    vec3 oct_to_float32x3( vec2 e) {
 
@@ -95,10 +111,18 @@ export default function(params) {
   
   void main() {
     // TODO: extract data from g buffers and do lighting
-     vec4 gbPos = texture2D(u_gbuffers[0], v_uv);
-     vec4 gNor = texture2D(u_gbuffers[1], v_uv);
-     vec4 gbNor = vec4(oct_to_float32x3(vec2(gNor.x, gNor.y)), 1.0);
-     vec4 albedo = texture2D(u_gbuffers[2], v_uv);
+
+     vec4 gPos = texture2D(u_gbuffers[0], v_uv);
+     vec4 gbPos = vec4(gPos.x,gPos.y,gPos.z, 1.0);
+
+     // I tried storing everything only as depth
+    //  vec4 gbPosNew = u_viewProjectionMatrix * gbPos ;
+    //  gbPosNew = vec4(WorldPosFromDepth(gbPosNew.z, v_uv), 1.0);
+
+    
+     vec4 galbedo = texture2D(u_gbuffers[1], v_uv);
+     vec4 albedo = vec4( galbedo.y, galbedo.z,galbedo.w, 1.0);
+     vec4 gbNor = vec4(oct_to_float32x3(vec2(gPos.w, galbedo.x)), 1.0);
 
      vec3 fragColor = vec3(0.0);
      vec4 v_viewPos = u_viewMatrix * gbPos;
@@ -136,10 +160,7 @@ export default function(params) {
 
     const vec3 ambientLight = vec3(0.025);
     fragColor += vec3(albedo) * ambientLight;
-
-    //gl_FragColor = normalize(albedo);
     gl_FragColor = vec4(fragColor, 1.0);
-    //gl_FragColor = vec4(v_uv, 0.0, 1.0);
   }
   `;
 }

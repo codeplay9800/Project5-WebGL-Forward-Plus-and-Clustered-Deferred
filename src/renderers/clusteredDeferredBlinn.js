@@ -10,7 +10,7 @@ import fsSource_Blinn from '../shaders/deferred_Blinn.frag.glsl';
 import TextureBuffer from './textureBuffer';
 import BaseRenderer from './base';
 
-export const NUM_GBUFFERS = 3;
+export const NUM_GBUFFERS = 2;
 
 export default class ClusteredDeferredBlinnRenderer extends BaseRenderer {
     constructor(xSlices, ySlices, zSlices) {

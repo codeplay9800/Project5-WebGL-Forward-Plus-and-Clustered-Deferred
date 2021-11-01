@@ -6,12 +6,13 @@ import toTextureVert from '../shaders/deferredToTexture.vert.glsl';
 import toTextureFrag from '../shaders/deferredToTexture.frag.glsl';
 import QuadVertSource from '../shaders/quad.vert.glsl';
 import fsSource from '../shaders/deferred.frag.glsl.js';
+import fsSource_Blinn from '../shaders/deferred_Blinn.frag.glsl';
 import TextureBuffer from './textureBuffer';
 import BaseRenderer from './base';
 
 export const NUM_GBUFFERS = 3;
 
-export default class ClusteredDeferredRenderer extends BaseRenderer {
+export default class ClusteredDeferredBlinnRenderer extends BaseRenderer {
     constructor(xSlices, ySlices, zSlices) {
         super(xSlices, ySlices, zSlices);
 
@@ -26,7 +27,7 @@ export default class ClusteredDeferredRenderer extends BaseRenderer {
         });
 
 
-        this._progShade = loadShaderProgram(QuadVertSource, fsSource({
+        this._progShade = loadShaderProgram(QuadVertSource, fsSource_Blinn({
             numLights: NUM_LIGHTS,
             numGBuffers: NUM_GBUFFERS,
             cwidth: canvas.width,

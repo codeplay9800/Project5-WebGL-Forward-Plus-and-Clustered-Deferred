@@ -4,10 +4,12 @@ import ForwardPlusRenderer from './renderers/forwardPlus';
 import ClusteredDeferredRenderer from './renderers/clusteredDeferred';
 import Scene from './scene';
 import Wireframe from './wireframe';
+import ClusteredDeferredBlinnRenderer from './renderers/clusteredDeferredBlinn';
 
 const FORWARD = 'Forward';
 const FORWARD_PLUS = 'Forward+';
 const CLUSTERED = 'Clustered Deferred';
+const CLUSTERED_BLINN = 'Clustered Deferred Blinn';
 
 const params = {
     renderer: CLUSTERED,
@@ -27,10 +29,13 @@ function setRenderer(renderer) {
         case CLUSTERED:
             params._renderer = new ClusteredDeferredRenderer(15, 15, 15);
             break;
+        case CLUSTERED_BLINN:
+            params._renderer = new ClusteredDeferredBlinnRenderer(15, 15, 15);
+            break;
     }
 }
 
-gui.add(params, 'renderer', [FORWARD, FORWARD_PLUS, CLUSTERED]).onChange(setRenderer);
+gui.add(params, 'renderer', [FORWARD, FORWARD_PLUS, CLUSTERED, CLUSTERED_BLINN]).onChange(setRenderer);
 
 const scene = new Scene();
 scene.loadGLTF('models/sponza/sponza.gltf');

@@ -9,7 +9,7 @@ import fsSource from '../shaders/deferred.frag.glsl.js';
 import TextureBuffer from './textureBuffer';
 import BaseRenderer from './base';
 
-export const NUM_GBUFFERS = 4;
+export const NUM_GBUFFERS = 3;
 
 export default class ClusteredDeferredRenderer extends BaseRenderer {
     constructor(xSlices, ySlices, zSlices) {
@@ -165,24 +165,25 @@ export default class ClusteredDeferredRenderer extends BaseRenderer {
 
         gl.uniformMatrix4fv(this._progShade.u_viewMatrix, false, this._viewMatrix);
 
-        // Set the light texture as a uniform input to the shader
-        gl.activeTexture(gl.TEXTURE2);
-        gl.bindTexture(gl.TEXTURE_2D, this._lightTexture.glTexture);
-        gl.uniform1i(this._progShade.u_lightbuffer, 2);
-
-        // Set the cluster texture as a uniform input to the shader
-        gl.activeTexture(gl.TEXTURE3);
-        gl.bindTexture(gl.TEXTURE_2D, this._clusterTexture.glTexture);
-        gl.uniform1i(this._progShade.u_clusterbuffer, 3);
 
 
         // Bind g-buffers
-        const firstGBufferBinding = 4; // You may have to change this if you use other texture slots
+        const firstGBufferBinding = 0; // You may have to change this if you use other texture slots
         for (let i = 0; i < NUM_GBUFFERS; i++) {
             gl.activeTexture(gl[`TEXTURE${i + firstGBufferBinding}`]);
             gl.bindTexture(gl.TEXTURE_2D, this._gbuffers[i]);
             gl.uniform1i(this._progShade[`u_gbuffers[${i}]`], i + firstGBufferBinding);
         }
+
+        // Set the light texture as a uniform input to the shader
+        gl.activeTexture(gl.TEXTURE4);
+        gl.bindTexture(gl.TEXTURE_2D, this._lightTexture.glTexture);
+        gl.uniform1i(this._progShade.u_lightbuffer, 4);
+
+        // Set the cluster texture as a uniform input to the shader
+        gl.activeTexture(gl.TEXTURE5);
+        gl.bindTexture(gl.TEXTURE_2D, this._clusterTexture.glTexture);
+        gl.uniform1i(this._progShade.u_clusterbuffer, 5);
 
         renderFullscreenQuad(this._progShade);
     }

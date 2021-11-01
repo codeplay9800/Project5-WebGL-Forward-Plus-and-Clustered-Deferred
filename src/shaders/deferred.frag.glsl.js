@@ -160,6 +160,7 @@ export default function(params) {
 
     const vec3 ambientLight = vec3(0.025);
     fragColor += vec3(albedo) * ambientLight;
+    //gl_FragColor = normalize(albedo);
     gl_FragColor = vec4(fragColor, 1.0);
   }
   `;

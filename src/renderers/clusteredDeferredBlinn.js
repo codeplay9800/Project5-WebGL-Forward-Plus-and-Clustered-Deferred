@@ -37,7 +37,7 @@ export default class ClusteredDeferredBlinnRenderer extends BaseRenderer {
             numZSlices: zSlices,
             numClusters: xSlices * ySlices * zSlices
         }), {
-            uniforms: ['u_gbuffers[0]', 'u_gbuffers[1]', 'u_gbuffers[2]', 'u_gbuffers[3]', 'u_lightbuffer', 'u_viewMatrix', 'u_clipDist', 'u_clusterbuffer', 'u_cameraPos'],
+            uniforms: ['u_gbuffers[0]', 'u_gbuffers[1]', 'u_lightbuffer', 'u_viewMatrix', 'u_clipDist', 'u_clusterbuffer', 'u_cameraPos'],
             attribs: ['a_uv'],
         });
 

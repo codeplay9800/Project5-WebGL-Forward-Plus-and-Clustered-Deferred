@@ -9,7 +9,7 @@ import fsSource from '../shaders/deferred.frag.glsl.js';
 import TextureBuffer from './textureBuffer';
 import BaseRenderer from './base';
 
-export const NUM_GBUFFERS = 3;
+export const NUM_GBUFFERS = 2;
 
 export default class ClusteredDeferredRenderer extends BaseRenderer {
     constructor(xSlices, ySlices, zSlices) {
@@ -36,7 +36,7 @@ export default class ClusteredDeferredRenderer extends BaseRenderer {
             numZSlices: zSlices,
             numClusters: xSlices * ySlices * zSlices
         }), {
-            uniforms: ['u_gbuffers[0]', 'u_gbuffers[1]', 'u_gbuffers[2]', 'u_gbuffers[3]', 'u_lightbuffer', 'u_viewMatrix', 'u_clipDist', 'u_clusterbuffer', 'u_cameraPos', 'u_projMatrixInv', 'u_viewProjectionMatrix'],
+            uniforms: ['u_gbuffers[0]', 'u_gbuffers[1]', 'u_lightbuffer', 'u_viewMatrix', 'u_clipDist', 'u_clusterbuffer', 'u_cameraPos', 'u_projMatrixInv', 'u_viewProjectionMatrix'],
             attribs: ['a_uv'],
         });
 

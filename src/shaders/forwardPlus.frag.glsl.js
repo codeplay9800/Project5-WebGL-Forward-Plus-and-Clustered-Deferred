@@ -107,6 +107,7 @@ export default function(params) {
     texHeight,
     frustumIndex,
     i + 1));
+    
       Light light = UnpackLight(i);
       float lightDistance = distance(light.position, v_position);
       vec3 L = (light.position - v_position) / lightDistance;

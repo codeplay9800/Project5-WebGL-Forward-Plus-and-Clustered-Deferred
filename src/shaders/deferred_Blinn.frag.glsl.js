@@ -146,10 +146,10 @@ vec3 oct_to_float32x3( vec2 e) {
   
       vec3 a_viewDir = normalize(vec3(u_cameraPos) - vec3(gbPos));
       vec3 a_HalfWay =  normalize((vec3(LightVec) + a_viewDir)/2.0);
-      float shininess = 40.0;
+      float shininess = 10.0;
       vec3 specularIntensity = vec3(max(pow(dot(normalize(a_HalfWay), normalize(vec3(gbNor))), shininess), 0.0));
 
-      fragColor += vec3( specularIntensity * lightIntensity +  vec3(albedo) * light.color * lambertTerm * lightIntensity);
+      fragColor += vec3( specularIntensity * lightIntensity *  vec3(albedo) * light.color * lambertTerm );
     }
     const vec3 ambientLight = vec3(0.025);
     fragColor += vec3(albedo) * ambientLight;

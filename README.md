@@ -53,11 +53,17 @@ For some reason my the numbers for time between each cycle of tick() call didn't
 
 **Forward, Forward+ and Deferred Clustered (Optimised)**
 ![Forward, Forward+ and Deferred Clustered](img/ForwardForward+andClusteredDeferred.png)
+As expected, the Clustered Deferred performs the best followed by Forward+ and the Forward. However as the number of lights Forward+  and Forward converge to about a similar performance as the most of the clusters are filled with a large number of lights and similar therefore similar computation. Deferred Clustered still performs the best due to multiple passes as explained above. 
 
 **Deferred Clustered and Deferred Clustered (Optimised)**
 ![Forward, Forward+ and Deferred Clustered](img/ClusteredDeferredandClusteredDeferred(Optimised).png)
+GBuffers are stored as Texture Images of Float32Byte arrrays. For Simple Deferred Clustered we are using three GBuffers to store Position, Normals and Color for each pixel Data.
+I have optimised by using 2 GBuffers as compared to three which provides faster less memory storage and faster access rate. Which attributes to performance increasee. This can be further optimised by storing depths only which is a single float value and recreating positions using viewProjectionMatrix and Texture Coordinates.
+I wasn't able to finish my implementation, but i believe it would greatly increase the performance.
 
-As expected, the Clustered Deferred performs the best followed by Forward+ and the Forward. However as the number of lights Forward+  and Forward converge to about a similar performance as the most of the clusters are filled with a large number of lights and similar therefore similar computation. Deferred Clustered still performs the best due to multiple passes as explained above. 
+
+### Blinn Phong Shading
+[![](img/BlinnSpecular.gif)](TODO)
 
 ### Credits
 

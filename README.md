@@ -17,6 +17,17 @@ WebGL Forward+ and Clustered Deferred Shading
 
 [![](img/WebGL2.gif)](TODO)
 
+
+**Buffer Images**
+- Position
+[![](img/Position.png)](TODO)
+
+- Normal
+[![](img/Normal.png)](TODO)
+
+- Albedo
+[![](img/albedo.png)](TODO)
+
 ### Overview
 
 This project highlights the performance differences between Forward, Forward+ clustered and Deferred clustered shading schemes. 
@@ -27,8 +38,8 @@ This project highlights the performance differences between Forward, Forward+ cl
 ### Performance Analysis 
 In Theory Expected Performance : Deferred Clustered >  Forward+ > Forward
 
-- Forward+ > Forward : This is attributed towards the number of lights calculation that finally affects a vertex. In Forward we are calculating the resultant color of an object vertex due to every light in the scene regardless of weather the light affects the object vertex. Where as i Forward+ we take into account the number of light affecting the object vertex so overall the lighting computation decreases.
--  Deferred Clustered > Forward+ : This is also attributed towards the number of light calculations that finally affects the vertex. But the difference comes into play due to multiple passes in Deferred Clustered. Since we store the position attributes in a Texture buffer once, the second pass of the fragment shader doesn't have to do light calculation for multiple fragment for the same pixel as we are left with only one fragment per pixel. Only the smallest depth fragments is left and all the others gets deleted off during the first pass. Whereas in the Forward+ lighting calculation is done for all the fragments for a particular pixel, the lowest one is kept while the others are discarded after the fragment shader stage. The downside is that we can't have transparence in our scene.   
+- **Forward+ > Forward** : This is attributed towards the number of lights calculation that finally affects a vertex. In Forward we are calculating the resultant color of an object vertex due to every light in the scene regardless of weather the light affects the object vertex. Where as i Forward+ we take into account the number of light affecting the object vertex so overall the lighting computation decreases.
+-  **Deferred Clustered > Forward+** : This is also attributed towards the number of light calculations that finally affects the vertex. But the difference comes into play due to multiple passes in Deferred Clustered. Since we store the position attributes in a Texture buffer once, the second pass of the fragment shader doesn't have to do light calculation for multiple fragment for the same pixel as we are left with only one fragment per pixel. Only the smallest depth fragments is left and all the others gets deleted off during the first pass. Whereas in the Forward+ lighting calculation is done for all the fragments for a particular pixel, the lowest one is kept while the others are discarded after the fragment shader stage. The downside is that we can't have transparence in our scene.   
 
 ### Performance Charts
 I have to used debug mode in order to get substantial analyses. To analyze this data, I used Google Chrome's built-in performance tools, which allows me to view the function calls in a tick() of the program.

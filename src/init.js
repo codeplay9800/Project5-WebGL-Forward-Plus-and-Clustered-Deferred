@@ -78,6 +78,9 @@ function setSize(width, height) {
 }
 
 setSize(canvas.clientWidth, canvas.clientHeight);
+console.log(canvas.clientWidth);
+console.log(canvas.clientHeight);
+
 window.addEventListener('resize', () => setSize(canvas.clientWidth, canvas.clientHeight));
 
 if (DEBUG) {

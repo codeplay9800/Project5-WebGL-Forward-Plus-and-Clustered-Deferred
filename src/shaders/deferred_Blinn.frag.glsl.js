@@ -138,18 +138,15 @@ vec3 oct_to_float32x3( vec2 e) {
       // Avoid negative lighting values
       diffuseTerm = clamp(diffuseTerm, 0.0, 1.0);
   
-      float ambientTerm = 0.02;
-  
-      float lightIntensity =  cubicGaussian(2.0 * lightDistance / light.radius);;
-      //float lightIntensity = diffuseTerm + ambientTerm;
+      float lightIntensity =  cubicGaussian(2.0 * lightDistance / light.radius);
   
   
       vec3 a_viewDir = normalize(vec3(u_cameraPos) - vec3(gbPos));
       vec3 a_HalfWay =  normalize((vec3(LightVec) + a_viewDir)/2.0);
-      float shininess = 10.0;
+      float shininess = 100.0;
       vec3 specularIntensity = vec3(max(pow(dot(normalize(a_HalfWay), normalize(vec3(gbNor))), shininess), 0.0));
 
-      fragColor += vec3( specularIntensity * lightIntensity *  vec3(albedo) * light.color * lambertTerm );
+      fragColor += vec3(  specularIntensity * vec3(albedo) * light.color * lambertTerm * lightIntensity );
     }
     const vec3 ambientLight = vec3(0.025);
     fragColor += vec3(albedo) * ambientLight;

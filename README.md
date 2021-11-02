@@ -15,7 +15,7 @@ WebGL Forward+ and Clustered Deferred Shading
 
 ### Demo Video/GIF
 
-[![](img/video.png)](TODO)
+[![](img/WebGL2.gif)](TODO)
 
 ### Overview
 
@@ -41,9 +41,10 @@ For some reason my the numbers for time between each cycle of tick() call didn't
   
 
 **Forward, Forward+ and Deferred Clustered (Optimised)**
+![Forward, Forward+ and Deferred Clustered](img/ForwardForward+andClusteredDeferred.png)
 
 **Deferred Clustered and Deferred Clustered (Optimised)**
-
+![Forward, Forward+ and Deferred Clustered](img/ClusteredDeferredandClusteredDeferred(Optimised).png)
 
 As expected, the Clustered Deferred performs the best followed by Forward+ and the Forward. However as the number of lights Forward+  and Forward converge to about a similar performance as the most of the clusters are filled with a large number of lights and similar therefore similar computation. Deferred Clustered still performs the best due to multiple passes as explained above. 
 
